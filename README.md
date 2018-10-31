@@ -36,7 +36,7 @@ example
 4.   Database is auto created. In application.properties keep
      spring.jpa.hibernate.ddl-auto = update if you don't want to recreate 
      database schema every time you restart the application
-5.    Create a Soap request with initial wsdl : nearestNeighborWsdl.wsdl.
+5.    Create a Soap request with initial wsdl :http://localhost:8080/service/nearestNeighborWsdl.wsdl  .
       Provide latitude and longitude you like to find nearest neighbor in double format.
 6.   Hit url described above for getting most frequent points        
 

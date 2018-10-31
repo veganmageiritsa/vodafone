@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.vodafone.utilities.Utils.round;
+import static com.vodafone.utilities.Utilities.round;
 
 @Component
 @PropertySource("classpath:application.properties")

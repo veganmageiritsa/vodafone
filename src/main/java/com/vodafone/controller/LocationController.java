@@ -3,6 +3,7 @@ package com.vodafone.controller;
 import com.vodafone.domain.PointTwoD;
 import com.vodafone.dto.Point2DDto;
 import com.vodafone.service.LocationService;
+import com.vodafone.utilities.Utilities;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,21 @@ static final String GETFREqPOINTSBYVALUE = "/gfpv";
 @Autowired
     private LocationService locationService;
     @RequestMapping(value = GETFREqPOINTSBYVALUE, method = RequestMethod.GET,produces = "application/json" )
-    public ResponseEntity customerOrder(
+    public ResponseEntity getFrequentNeighbors(
                                         @RequestParam("counterValue") int counterValue) {
         try {
-            List<PointTwoD> freqLocations = locationService.getFrequentLocations(counterValue);
-            List<Point2DDto> freqLocationsResponse = new ArrayList<>();
-            freqLocations.forEach(location->freqLocationsResponse.add(new Point2DDto(location)));
-            return new ResponseEntity(freqLocationsResponse, HttpStatus.OK);
+            if(!Utilities.isEmpty(counterValue) && counterValue>=0) {
+                List<PointTwoD> freqLocations = locationService.getFrequentLocations(counterValue);
+                List<Point2DDto> freqLocationsResponse = new ArrayList<>();
+                freqLocations.forEach(location -> freqLocationsResponse.add(new Point2DDto(location)));
+                return new ResponseEntity(freqLocationsResponse, HttpStatus.OK);
+            }else{
+                log.info(String.format("Error in Database with value passed: %s", counterValue));
+                return new ResponseEntity("", HttpStatus.BAD_REQUEST);
+            }
 
         } catch (Exception e) {
-            log.error("error in database");
+            log.error(String.format("Error in Database with value passed: %s", counterValue), e);
             return new ResponseEntity("", HttpStatus.SERVICE_UNAVAILABLE);
         }
     }

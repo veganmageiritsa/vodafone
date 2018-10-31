@@ -34,4 +34,8 @@ public class Utilities {
             return ((Map) value).isEmpty();
         } else return value.getClass().isArray() && (Array.getLength(value) == 0);
     }
+
+    public static boolean isNotEmpty(Object value) {
+        return !isEmpty(value);
+    }
 }
